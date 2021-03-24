@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useEffect, useState} from 'react'
+import axios from 'axios'
+export default function App() {
+ const [num, setnum] = useState()
+const [name,setname]=useState()
+const [move,setmoves]=useState()
+const [image, setimage] = useState()
 
-function App() {
+ useEffect(()=>{
+   
+   async function getData(){
+const res=await axios.get(`https://pokeapi.co/api/v2/pokemon/${num}`)
+
+ 
+setname(res.data.name)
+setmoves(res.data.moves.length)
+
+
+   }
+   getData()
+ })
+ 
+ 
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <div>
+      <h1>You selected <span style={{color:"red"}}>{name}</span> </h1>
+<h1>YOu have Selected this "{num}" </h1>
+<h1>he has <span style={{color:"red"}}>{move}</span>  moves </h1>
 
-export default App;
+      <select value={num} onChange={(event)=>{
+        setnum(event.target.value)
+      }}>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+  )
+}
